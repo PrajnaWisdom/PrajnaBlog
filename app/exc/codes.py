@@ -1,0 +1,26 @@
+BIZ_CODE_OK = 0
+
+# 系统错误
+BIZ_CODE_FAIL = 50000
+
+# 资源不存在
+BIZ_CODE_NOT_EXISTS = 40004
+
+# 管理员账号不存在
+BIZ_CODE_ADMIN_USER_NOT_EXISTS = 40604
+
+# 验证码错误
+BIZ_CODE_CAPTCHA_ERROR = 50501
+
+# 资源已存在
+BIZ_CODE_EXISTS = 40003
+
+
+CODE_MESSAGE = {
+    BIZ_CODE_OK: "操作成功",
+    BIZ_CODE_FAIL: "系统错误",
+    BIZ_CODE_NOT_EXISTS: "资源不存在",
+    BIZ_CODE_ADMIN_USER_NOT_EXISTS: "管理员账号不存在",
+    BIZ_CODE_CAPTCHA_ERROR: "验证码错误",
+    BIZ_CODE_EXISTS: "资源已存在",
+}
