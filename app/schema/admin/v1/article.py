@@ -39,3 +39,12 @@ class CreateArticleSchema(BaseModel):
     tags: List[int]
     article_type: int
     is_public: bool
+
+
+class CreateTagSchema(BaseModel):
+    name: str
+
+
+class TagSchema(BaseModel):
+    id: int
+    name: str

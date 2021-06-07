@@ -3,9 +3,7 @@ from app.schema.admin.v1.article import (
     QueryArticle,
     ArticleSchema,
     CreateArticleSchema,
-    UpdateArticleSchema,
     CreateTagSchema,
-    UpdateTagSchema,
     TagSchema,
 )
 from app.exc.codes import BIZ_CODE_EXISTS, BIZ_CODE_NOT_EXISTS
@@ -32,7 +30,7 @@ async def create_article(create: CreateArticleSchema):
     return Response.success(data={"id": article.id})
 
 
-async def update_article(article_id, update: UpdateArticleSchema):
+async def update_article(article_id, update: CreateArticleSchema):
     article = Article.get(article_id)
     if not article:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="文章不存在")
@@ -65,7 +63,7 @@ async def create_tag(create: CreateTagSchema):
     return Response.response(data={"id": tag.id})
 
 
-async def update_tag(tag_id, update: UpdateTagSchema):
+async def update_tag(tag_id, update: CreateTagSchema):
     tag = ArticleTag.get(tag_id)
     if not tag:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="标签不存在")
