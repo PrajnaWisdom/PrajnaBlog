@@ -2,7 +2,7 @@ from app.external.captcha import Captcha
 from app.utils.api import Response
 
 
-async def captcha():
+def captcha():
     uid, _, image_data = Captcha().generate_image_captcha()
     return Response.success(data={
         "captcha_id": uid,

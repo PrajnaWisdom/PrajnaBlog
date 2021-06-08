@@ -1,6 +1,7 @@
 from math import ceil
-from functools import partail
-from fastapi import JSONResponse, status
+from functools import partial
+from fastapi import status
+from fastapi.responses import JSONResponse
 
 from app.exc.codes import (
     BIZ_CODE_OK,
@@ -22,9 +23,9 @@ class Response:
 
     response = response
 
-    not_found = partail(response, code=BIZ_CODE_NOT_EXISTS)
+    not_found = partial(response, code=BIZ_CODE_NOT_EXISTS)
 
-    fail = partail(response, code=BIZ_CODE_FAIL)
+    fail = partial(response, code=BIZ_CODE_FAIL)
 
 
 def paginate(query, page: int = 1, per_page: int = 10):

@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import Optional, List
 from pydantic import BaseModel
+from fastapi import Query
 
 
 class ArticleSchema(BaseModel):
@@ -22,13 +23,13 @@ class ArticleSchema(BaseModel):
 
 
 class QueryArticle(BaseModel):
-    keyword: Optional[str] = None
-    field_type: Optional[str] = None
-    sort: int = 0
-    sort_field: Optional[str] = None
-    is_public: Optional[int] = None
-    page: int = 1
-    per_page: int = 10
+    keyword: Optional[str] = Query(None)
+    field_type: Optional[str] = Query(None)
+    sort: int = Query(0)
+    sort_field: Optional[str] = Query(None)
+    is_public: Optional[int] = Query(None)
+    page: int = Query(1)
+    per_page: int = Query(10)
 
 
 class CreateArticleSchema(BaseModel):

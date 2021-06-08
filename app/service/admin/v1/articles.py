@@ -10,7 +10,7 @@ from app.exc.codes import BIZ_CODE_EXISTS, BIZ_CODE_NOT_EXISTS
 from app.utils.api import Response, paginate
 
 
-async def query_articles(query: QueryArticle):
+def query_articles(query: QueryArticle):
     rows = Article.query_articles(
         query.keyword,
         query.filed_type,
@@ -23,14 +23,14 @@ async def query_articles(query: QueryArticle):
     return Response.success(data={"paginate": pagination, "result": result})
 
 
-async def create_article(create: CreateArticleSchema):
+def create_article(create: CreateArticleSchema):
     if Article.get_by_name(create.name):
         return Response.response(code=BIZ_CODE_EXISTS, message="已存在相同名字的文章")
     article = Article.create(**create.dict())
     return Response.success(data={"id": article.id})
 
 
-async def update_article(article_id, update: CreateArticleSchema):
+def update_article(article_id, update: CreateArticleSchema):
     article = Article.get(article_id)
     if not article:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="文章不存在")
@@ -40,7 +40,7 @@ async def update_article(article_id, update: CreateArticleSchema):
     return Response.success(data={"id": article.id})
 
 
-async def get_article(article_id):
+def get_article(article_id):
     article = Article.get(article_id)
     if not article:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="文章不存在")
@@ -48,7 +48,7 @@ async def get_article(article_id):
     return Response.success(data=result.dict())
 
 
-async def delete_article(article_id):
+def delete_article(article_id):
     article = Article.get(article_id)
     if not article:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="文章不存在")
@@ -56,14 +56,14 @@ async def delete_article(article_id):
     return Response.success(data={"id": article.id})
 
 
-async def create_tag(create: CreateTagSchema):
+def create_tag(create: CreateTagSchema):
     if ArticleTag.get_by_name(create.name):
         return Response.response(code=BIZ_CODE_EXISTS, message="已存在相同名字的标签")
     tag = ArticleTag.create(name=create.name)
     return Response.response(data={"id": tag.id})
 
 
-async def update_tag(tag_id, update: CreateTagSchema):
+def update_tag(tag_id, update: CreateTagSchema):
     tag = ArticleTag.get(tag_id)
     if not tag:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="标签不存在")
@@ -73,7 +73,7 @@ async def update_tag(tag_id, update: CreateTagSchema):
     return Response.response(data={"id": tag.id})
 
 
-async def delete_tag(tag_id):
+def delete_tag(tag_id):
     tag = ArticleTag.get(tag_id)
     if not tag:
         return Response.response(code=BIZ_CODE_NOT_EXISTS, message="标签不存在")
@@ -81,7 +81,7 @@ async def delete_tag(tag_id):
     return Response.response(data={"id": tag.id})
 
 
-async def get_tags():
+def get_tags():
     tags = ArticleTag.get_all()
     result = [TagSchema.from_orm(item).dict() for item in tags]
     return Response.success(data=result)

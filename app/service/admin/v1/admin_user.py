@@ -9,7 +9,7 @@ from app.exc.consts import CACHE_ADMIN_USER_TOKEN, CACHE_TWELVE_HOUR
 from app.utils.api import Response
 
 
-async def login(login: Login):
+def login(login: Login):
     admin_user = AdminUser.get_by_account(login.account)
     if not Captcha.check_captcha(login.captchaID, login.captcha):
         return Response.response(code=BIZ_CODE_CAPTCHA_ERROR)
@@ -27,6 +27,6 @@ async def login(login: Login):
     return Response.success(data=result)
 
 
-async def logout(token: str):
+def logout(token: str):
     cache.delete(CACHE_ADMIN_USER_TOKEN.format(token))
     return Response.success()

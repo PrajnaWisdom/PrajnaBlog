@@ -1,12 +1,11 @@
 import uuid
 import base64
 import random
-from typing import Tuple
 from PIL import ImageFilter
 from captcha.image import ImageCaptcha, random_color
 
 from app.corelibs.redis import cache
-from app.exc.consts import CACHE_CAPTCHA_VALUE, CACHE_FIVE_MINUTE
+from app.exc.consts import CACHE_ADMIN_CAPTCHA_VALUE, CACHE_FIVE_MINUTE
 
 
 def random_text(length=4):
@@ -25,17 +24,17 @@ class Captcha(ImageCaptcha):
         im = im.filter(ImageFilter.SMOOTH)
         return im
 
-    def generate_image_captcha(self, length=4) -> Tuple[str, str, str]:
+    def generate_image_captcha(self, length=4):
         chars = random_text(length)
         uid = uuid.uuid4().hex
         image_data = self.generate(chars)
         image_data_b64 = base64.b64encode(image_data.getvalue()).decode('utf-8')
-        cache.set(CACHE_CAPTCHA_VALUE.format(uuid), chars, CACHE_FIVE_MINUTE)
+        cache.set(CACHE_ADMIN_CAPTCHA_VALUE.format(uuid), chars, CACHE_FIVE_MINUTE)
         return uid, chars, image_data_b64
 
     @classmethod
     def check_captcha(cls, captcha_id, captcha):
-        result = cache.get(CACHE_CAPTCHA_VALUE.format(captcha_id))
+        result = cache.get(CACHE_ADMIN_CAPTCHA_VALUE.format(captcha_id))
         if not result:
             return False
         if result != captcha:
