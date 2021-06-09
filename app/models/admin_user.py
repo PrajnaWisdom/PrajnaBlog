@@ -46,3 +46,7 @@ class AdminUser(Base):
             cls.enabled == enabled
         ).first()
         return query
+
+    @classmethod
+    def get(cls, id):
+        return session.query(cls).get(id)

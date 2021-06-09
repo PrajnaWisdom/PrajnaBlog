@@ -21,7 +21,7 @@ from app.schema.admin.v1.article import (
 router = APIRouter()
 
 
-@router.get("/list")
+@router.post("/list")
 async def admin_query_articles(query: QueryArticle):
     return query_articles(query)
 
